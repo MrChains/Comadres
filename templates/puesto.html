@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block title %} Puesto {{puesto}} {% endblock %}
+{% block content %}
+<body>
+    <h1>Bebidas</h1>
+    <form hx-post="/submit" hx-swap="beforeend" hx-target="#new-sale" class="mb-3">
+        <button type="submit" class="btn btn-primary">Ron</button>
+        <button type="submit" class="btn btn-primary">Tequila</button>
+    </form>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Bebida</th>
+            <th scope="col">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="new-sale" hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
+            {% for sale in sales %}
+            <tr>
+                <td>{{sale.name}}</td>
+                <td>{{sale.quantity}}</td>
+                <td>
+                    <button class="btn btn-primary"
+                        hx-get="/get-edit-form/{{book.Book.book_id}}">
+                        Edit Title
+                    </button>
+                </td>
+                <td>
+                    <button hx-delete="/delete/{{book.Book.book_id}}" class="btn btn-primary">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+{% endblock %}
